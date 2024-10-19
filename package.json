@@ -1,0 +1,16 @@
+{
+    "name": "threejs-microservice",
+    "version": "1.0.0",
+    "description": "Three.js microservice with MongoDB",
+    "main": "src/server.js",
+    "scripts": {
+      "start": "node src/server.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongodb": "^4.1.0",
+      "ws": "^8.0.0",
+      "three": "^0.132.2",
+      "config": "^3.3.6"
+    }
+  }
