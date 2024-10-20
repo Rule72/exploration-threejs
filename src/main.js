@@ -1,11 +1,14 @@
 import * as THREE from 'three';
+import { OBJLoader } from './three-examples/OBJLoader.js';
+import { FontLoader } from './three-examples/FontLoader.js';
+import { TextGeometry } from './three-examples/TextGeometry.js';
 
 let OBJLoader, FontLoader, TextGeometry;
 
 async function loadModules() {
-  OBJLoader = (await import('three/examples/jsm/loaders/OBJLoader.js')).OBJLoader;
-  FontLoader = (await import('three/examples/jsm/loaders/FontLoader.js')).FontLoader;
-  TextGeometry = (await import('three/examples/jsm/geometries/TextGeometry.js')).TextGeometry;
+  OBJLoader = (await import('../three-examples/jsm/loaders/OBJLoader.js')).OBJLoader;
+  FontLoader = (await import('../three-examples/jsm/loaders/FontLoader.js')).FontLoader;
+  TextGeometry = (await import('../three-examples/jsm/geometries/TextGeometry.js')).TextGeometry;
 }
 
 async function init() {

@@ -7,7 +7,8 @@
       "build": "vite build",
       "serve": "vite preview",
       "start": "node server.js",
-      "docker-start": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run build && npm start; else npm run dev; fi"
+      "docker-start": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run build && npm start; else npm run dev; fi",
+      "download-examples": "node download-three-examples.js"
     },
     "dependencies": {
       "express": "^4.17.1",
