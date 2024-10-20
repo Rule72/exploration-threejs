@@ -23,7 +23,29 @@ This project is a microservice that uses Three.js, MongoDB, and Vite to create a
 
 ## Running the Application
 
-### Development Mode
+### Development Mode with Docker
+
+1. Run the following command:
+   ```
+   NODE_ENV=development docker-compose up --build
+   ```
+
+2. Open your browser and navigate to `http://localhost:3000`
+
+This will start the Vite dev server and enable hot reloading.
+
+### Production Mode with Docker
+
+1. Run the following command:
+   ```
+   docker-compose up --build
+   ```
+
+2. Open your browser and navigate to `http://localhost:3000`
+
+This will build the application and serve it using the production server.
+
+### Local Development (without Docker)
 
 1. Start the MongoDB container:
    ```
@@ -33,20 +55,6 @@ This project is a microservice that uses Three.js, MongoDB, and Vite to create a
 2. In a new terminal, start the Vite development server:
    ```
    npm run dev
-   ```
-
-3. Open your browser and navigate to `http://localhost:3000`
-
-### Production Mode
-
-1. Build the application:
-   ```
-   npm run build
-   ```
-
-2. Start the entire stack using Docker Compose:
-   ```
-   docker-compose up --build
    ```
 
 3. Open your browser and navigate to `http://localhost:3000`
