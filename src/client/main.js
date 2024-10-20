@@ -6,7 +6,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 let scene, camera, renderer;
 let sceneObjects = [];
 
-function init() {
+async function init() {
   // Create scene
   scene = new THREE.Scene();
   
@@ -20,7 +20,7 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   // Load scene data
-  loadSceneData();
+  await loadSceneData();
 
   // Handle window resize
   window.addEventListener('resize', onWindowResize, false);
@@ -78,7 +78,7 @@ async function loadModel(modelData) {
 async function loadText(textData) {
   const loader = new FontLoader();
   try {
-    const font = await loader.loadAsync('path/to/your/font.json'); // Replace with actual font path
+    const font = await loader.loadAsync('/fonts/helvetiker_regular.typeface.json'); // Adjust path as needed
     const geometry = new TextGeometry(textData.text, {
       font: font,
       size: textData.size,
@@ -109,9 +109,9 @@ function onWindowResize() {
 function animate() {
   requestAnimationFrame(animate);
   
-  // Add any animations or updates here
+  // Rotate all objects in the scene
   sceneObjects.forEach(obj => {
-    obj.rotation.y += 0.005;
+    obj.rotation.y += 0.01;
   });
 
   renderer.render(scene, camera);

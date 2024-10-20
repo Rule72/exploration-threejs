@@ -6,7 +6,7 @@ function createDefaultScene() {
     objects: [
       {
         type: 'model',
-        path: './objects/foot.obj',
+        path: '/objects/foot.obj',
         position: { x: 0, y: -1, z: 0 },
         rotation: { x: -Math.PI / 2, y: 0, z: 0 },
         scale: { x: 0.02, y: 0.02, z: 0.02 }
