@@ -1,14 +1,20 @@
 import './style.css'
 import { Scene } from './components/Scene.js'
 
-const canvas = document.getElementById('scene')
-const scene = new Scene(canvas)
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('scene')
+  if (!canvas) {
+    console.error('Canvas element not found')
+    return
+  }
 
-function animate() {
+  const scene = new Scene(canvas)
+
+  function animate() {
     requestAnimationFrame(animate)
     scene.update()
     scene.render()
-}
+  }
 
-animate()
-
+  animate()
+})
