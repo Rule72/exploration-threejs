@@ -7,11 +7,9 @@ let scene, camera, renderer;
 let foot, text;
 
 function init() {
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
+  renderer = new THREE.WebGLRenderer({ antialias: true });  camera.position.z = 5;
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -20,7 +18,6 @@ function init() {
   addLights();
 
   window.addEventListener('resize', onWindowResize, false);
-  animate();
 }
 
 function loadModel() {
@@ -84,3 +81,4 @@ function animate() {
 }
 
 init();
+animate();

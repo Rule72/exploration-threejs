@@ -2,13 +2,13 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  root: path.resolve(__dirname, 'src'),
+  root: '.',
   build: {
-    outDir: path.resolve(__dirname, 'dist'),
+    outDir: 'dist',
     emptyOutDir: true,
   },
   server: {
     port: 3000,
   },
-  publicDir: path.resolve(__dirname, 'public'),
+  publicDir: 'public',
 });
