@@ -33,7 +33,7 @@ function loadModel() {
 
 function loadText() {
   const fontLoader = new FontLoader();
-  fontLoader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
+  fontLoader.load('/fonts/helvetiker_bold.typeface.json', (font) => {
     const textGeometry = new TextGeometry('Jake Hopkins', {
       font: font,
       size: 0.5,

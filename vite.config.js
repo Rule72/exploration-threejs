@@ -11,4 +11,9 @@ export default defineConfig({
     port: 3000,
   },
   publicDir: 'public',
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 });
