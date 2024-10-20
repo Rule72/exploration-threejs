@@ -21,6 +21,11 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['three']
+    include: [
+      'three',
+      'three/examples/jsm/loaders/OBJLoader',
+      'three/examples/jsm/loaders/FontLoader',
+      'three/examples/jsm/geometries/TextGeometry'
+    ]
   }
 });

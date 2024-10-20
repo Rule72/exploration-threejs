@@ -1,12 +1,15 @@
 import * as THREE from 'three';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
-let scene, camera, renderer;
-let foot, text;
+let OBJLoader, FontLoader, TextGeometry;
 
-function init() {
+async function loadModules() {
+  OBJLoader = (await import('three/examples/jsm/loaders/OBJLoader')).OBJLoader;
+  FontLoader = (await import('three/examples/jsm/loaders/FontLoader')).FontLoader;
+  TextGeometry = (await import('three/examples/jsm/geometries/TextGeometry')).TextGeometry;
+}
+
+async function init() {
+  await loadModules();
   renderer = new THREE.WebGLRenderer({ antialias: true });  camera.position.z = 5;
 
   renderer = new THREE.WebGLRenderer();
