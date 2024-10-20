@@ -6,6 +6,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      external: ['three']
+    }
   },
   server: {
     port: 3000,
@@ -14,6 +17,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      'three': path.resolve(__dirname, 'node_modules/three')
     },
   },
   optimizeDeps: {
