@@ -12,7 +12,7 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['three', 'three/examples/jsm/loaders/FontLoader', 'three/examples/jsm/geometries/TextGeometry']
+    include: ['three']
   },
   build: {
     commonjsOptions: {
