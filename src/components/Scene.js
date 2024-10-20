@@ -12,7 +12,9 @@ export class Scene {
         this.setupCube()
         this.setupGrid()
 
-        this.camera.position.z = 5
+        // Update camera position and rotation
+        this.camera.position.set(0, 10, 10)
+        this.camera.lookAt(0, 0, 0)
 
         window.addEventListener('resize', () => this.onWindowResize(), false)
 
@@ -31,6 +33,15 @@ export class Scene {
         const pointLight2 = new THREE.PointLight(0x00ffff, 1, 100)
         pointLight2.position.set(-5, -5, 5)
         this.scene.add(pointLight2)
+
+        // Add rim lights
+        const rimLight1 = new THREE.PointLight(0xffffff, 10, 20)
+        rimLight1.position.set(-5, 0, -5)
+        this.scene.add(rimLight1)
+
+        const rimLight2 = new THREE.PointLight(0xffffff, 10, 20)
+        rimLight2.position.set(5, 0, -5)
+        this.scene.add(rimLight2)
     }
 
     setupCube() {
