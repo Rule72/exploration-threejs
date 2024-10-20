@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { OBJLoader } from './three-examples/OBJLoader.js';
-import { FontLoader } from './three-examples/FontLoader.js';
-import { TextGeometry } from './three-examples/TextGeometry.js';
+import { OBJLoader } from 'three-examples/OBJLoader.js';
+import { FontLoader } from 'three-examples/FontLoader.js';
+import { TextGeometry } from 'three-examples/TextGeometry.js';
 
 let scene, camera, renderer, foot, text;
 
