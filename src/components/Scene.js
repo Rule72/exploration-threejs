@@ -1,6 +1,4 @@
 import * as THREE from 'three'
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 
 export class Scene {
     constructor(canvas) {
@@ -80,18 +78,28 @@ export class Scene {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
-    loadFontAndSetupText() {
-        const loader = new FontLoader()
-        loader.load('/fonts/cyberpunk.json', (font) => {
-            const textGeometry = new TextGeometry('Jake Hopkins', {
-                font: font,
-                size: 0.5,
-                height: 0.1,
+    async loadFontAndSetupText() {
+        try {
+            const FontLoaderModule = await import('three/examples/jsm/loaders/FontLoader.js')
+            const TextGeometryModule = await import('three/examples/jsm/geometries/TextGeometry.js')
+            
+            const FontLoader = FontLoaderModule.FontLoader
+            const TextGeometry = TextGeometryModule.TextGeometry
+
+            const loader = new FontLoader()
+            loader.load('/fonts/cyberpunk.json', (font) => {
+                const textGeometry = new TextGeometry('Jake Hopkins', {
+                    font: font,
+                    size: 0.5,
+                    height: 0.1,
+                })
+                const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
+                this.text = new THREE.Mesh(textGeometry, textMaterial)
+                this.text.position.set(-2, 0, -2)
+                this.scene.add(this.text)
             })
-            const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
-            this.text = new THREE.Mesh(textGeometry, textMaterial)
-            this.text.position.set(-2, 0, -2)
-            this.scene.add(this.text)
-        })
+        } catch (error) {
+            console.error('Error loading font:', error)
+        }
     }
 }
