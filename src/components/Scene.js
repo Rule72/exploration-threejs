@@ -12,12 +12,14 @@ export class Scene {
 
         this.setupLights()
         this.setupCube()
-        this.setupText()
         this.setupGrid()
 
         this.camera.position.z = 5
 
         window.addEventListener('resize', () => this.onWindowResize(), false)
+
+        // Load font and set up text asynchronously
+        this.loadFontAndSetupText()
     }
 
     setupLights() {
@@ -76,5 +78,20 @@ export class Scene {
         this.camera.aspect = window.innerWidth / window.innerHeight
         this.camera.updateProjectionMatrix()
         this.renderer.setSize(window.innerWidth, window.innerHeight)
+    }
+
+    loadFontAndSetupText() {
+        const loader = new FontLoader()
+        loader.load('/fonts/cyberpunk.json', (font) => {
+            const textGeometry = new TextGeometry('Jake Hopkins', {
+                font: font,
+                size: 0.5,
+                height: 0.1,
+            })
+            const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
+            this.text = new THREE.Mesh(textGeometry, textMaterial)
+            this.text.position.set(-2, 0, -2)
+            this.scene.add(this.text)
+        })
     }
 }
