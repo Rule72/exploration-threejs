@@ -3,19 +3,14 @@ import { OBJLoader } from './three-examples/OBJLoader.js';
 import { FontLoader } from './three-examples/FontLoader.js';
 import { TextGeometry } from './three-examples/TextGeometry.js';
 
-let OBJLoader, FontLoader, TextGeometry;
+let scene, camera, renderer, foot, text;
 
-async function loadModules() {
-  OBJLoader = (await import('../three-examples/jsm/loaders/OBJLoader.js')).OBJLoader;
-  FontLoader = (await import('../three-examples/jsm/loaders/FontLoader.js')).FontLoader;
-  TextGeometry = (await import('../three-examples/jsm/geometries/TextGeometry.js')).TextGeometry;
-}
+function init() {
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
 
-async function init() {
-  await loadModules();
-  renderer = new THREE.WebGLRenderer({ antialias: true });  camera.position.z = 5;
-
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
