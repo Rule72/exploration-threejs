@@ -1,23 +1,8 @@
-import { defineConfig } from 'vite';
-import path from 'path';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: '.',
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-  },
   server: {
-    port: 3000,
-  },
-  publicDir: 'public',
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      'three-examples': path.resolve(__dirname, './src/three-examples')
-    },
-  },
-  optimizeDeps: {
-    include: ['three']
+    host: '0.0.0.0',
+    port: 3000
   }
-});
+})

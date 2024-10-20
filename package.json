@@ -1,23 +1,15 @@
 {
-    "name": "threejs-microservice",
-    "version": "1.0.0",
-    "description": "Three.js microservice with MongoDB and Vite",
-    "scripts": {
-      "dev": "vite",
-      "build": "vite build",
-      "serve": "vite preview",
-      "start": "node server.js",
-      "docker-start": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run build && npm start; else npm run dev; fi",
-      "download-examples": "node download-three-examples.js"
-    },
-    "dependencies": {
-      "express": "^4.17.1",
-      "mongodb": "^4.1.0",
-      "ws": "^8.0.0",
-      "three": "0.150.1",
-      "config": "^3.3.6"
-    },
-    "devDependencies": {
-      "vite": "^4.3.0"
-    }
+  "name": "exploration-threejs",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.150.1"
+  },
+  "devDependencies": {
+    "vite": "^4.2.0"
+  }
 }

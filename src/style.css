@@ -1,0 +1,15 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+}
+
+@font-face {
+    font-family: 'Cyberpunk';
+    src: url('/fonts/cyberpunk.otf') format('opentype');
+}
+
