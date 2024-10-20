@@ -3,9 +3,9 @@ import * as THREE from 'three';
 let OBJLoader, FontLoader, TextGeometry;
 
 async function loadModules() {
-  OBJLoader = (await import('three/examples/jsm/loaders/OBJLoader')).OBJLoader;
-  FontLoader = (await import('three/examples/jsm/loaders/FontLoader')).FontLoader;
-  TextGeometry = (await import('three/examples/jsm/geometries/TextGeometry')).TextGeometry;
+  OBJLoader = (await import('three/examples/jsm/loaders/OBJLoader.js')).OBJLoader;
+  FontLoader = (await import('three/examples/jsm/loaders/FontLoader.js')).FontLoader;
+  TextGeometry = (await import('three/examples/jsm/geometries/TextGeometry.js')).TextGeometry;
 }
 
 async function init() {

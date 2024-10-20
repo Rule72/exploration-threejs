@@ -23,9 +23,9 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       'three',
-      'three/examples/jsm/loaders/OBJLoader',
-      'three/examples/jsm/loaders/FontLoader',
-      'three/examples/jsm/geometries/TextGeometry'
+      'three/examples/jsm/loaders/OBJLoader.js',
+      'three/examples/jsm/loaders/FontLoader.js',
+      'three/examples/jsm/geometries/TextGeometry.js'
     ]
   }
 });

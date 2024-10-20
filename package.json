@@ -13,7 +13,7 @@
       "express": "^4.17.1",
       "mongodb": "^4.1.0",
       "ws": "^8.0.0",
-      "three": "^0.150.0",
+      "three": "0.150.1",
       "config": "^3.3.6"
     },
     "devDependencies": {
