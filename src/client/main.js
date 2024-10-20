@@ -4,9 +4,9 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
 let scene, camera, renderer;
-let sceneObjects = [];
+let foot, text;
 
-async function init() {
+function init() {
   // Create scene
   scene = new THREE.Scene();
   
@@ -19,85 +19,67 @@ async function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // Load scene data
-  await loadSceneData();
+  // Load foot model
+  const loader = new OBJLoader();
+  loader.load(
+    '/objects/foot.obj',
+    (object) => {
+      foot = object;
+      foot.position.set(0, -1, 0);
+      foot.rotation.x = -Math.PI / 2;
+      foot.scale.set(0.02, 0.02, 0.02);
+      scene.add(foot);
+    },
+    (xhr) => {
+      console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+    },
+    (error) => {
+      console.error('An error happened', error);
+    }
+  );
+
+  // Load font and create text
+  const fontLoader = new FontLoader();
+  fontLoader.load(
+    '/fonts/helvetiker_regular.typeface.json',
+    (font) => {
+      const textGeometry = new TextGeometry('Jake Hopkins', {
+        font: font,
+        size: 0.5,
+        height: 0.1,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.03,
+        bevelSize: 0.02,
+        bevelSegments: 5
+      });
+      const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+      text = new THREE.Mesh(textGeometry, textMaterial);
+      text.position.set(-1.5, 0, -2);
+      scene.add(text);
+    }
+  );
+
+  // Add lights
+  const lights = [
+    { color: 0x00FFFF, intensity: 0.8, position: { x: 2, y: 3, z: 4 } },
+    { color: 0xFF00FF, intensity: 0.5, position: { x: -2, y: 2, z: -3 } },
+    { color: 0xFFFF00, intensity: 0.4, position: { x: 0, y: -3, z: 0 } },
+    { color: 0x39FF14, intensity: 1.2, position: { x: -3, y: 0, z: 3 } },
+    { color: 0xFF6600, intensity: 1.2, position: { x: 3, y: 0, z: -3 } }
+  ];
+
+  lights.forEach(light => {
+    const pointLight = new THREE.PointLight(light.color, light.intensity);
+    pointLight.position.set(light.position.x, light.position.y, light.position.z);
+    scene.add(pointLight);
+  });
 
   // Handle window resize
   window.addEventListener('resize', onWindowResize, false);
 
   // Start animation loop
   animate();
-}
-
-async function loadSceneData() {
-  try {
-    const response = await fetch('/api/scene'); // Adjust this URL as needed
-    const sceneData = await response.json();
-
-    // Set camera position
-    camera.position.set(
-      sceneData.camera.position.x,
-      sceneData.camera.position.y,
-      sceneData.camera.position.z
-    );
-
-    // Load objects
-    for (const obj of sceneData.objects) {
-      if (obj.type === 'model') {
-        await loadModel(obj);
-      } else if (obj.type === 'text') {
-        await loadText(obj);
-      }
-    }
-
-    // Add lights
-    for (const light of sceneData.lights) {
-      const pointLight = new THREE.PointLight(light.color, light.intensity);
-      pointLight.position.set(light.position.x, light.position.y, light.position.z);
-      scene.add(pointLight);
-    }
-  } catch (error) {
-    console.error('Error loading scene data:', error);
-  }
-}
-
-async function loadModel(modelData) {
-  const loader = new OBJLoader();
-  try {
-    const object = await loader.loadAsync(modelData.path);
-    object.position.set(modelData.position.x, modelData.position.y, modelData.position.z);
-    object.rotation.set(modelData.rotation.x, modelData.rotation.y, modelData.rotation.z);
-    object.scale.set(modelData.scale.x, modelData.scale.y, modelData.scale.z);
-    scene.add(object);
-    sceneObjects.push(object);
-  } catch (error) {
-    console.error('Error loading model:', error);
-  }
-}
-
-async function loadText(textData) {
-  const loader = new FontLoader();
-  try {
-    const font = await loader.loadAsync('/fonts/helvetiker_regular.typeface.json'); // Adjust path as needed
-    const geometry = new TextGeometry(textData.text, {
-      font: font,
-      size: textData.size,
-      height: textData.height,
-      curveSegments: textData.curveSegments,
-      bevelEnabled: textData.bevelEnabled,
-      bevelThickness: textData.bevelThickness,
-      bevelSize: textData.bevelSize,
-      bevelSegments: textData.bevelSegments
-    });
-    const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
-    const textMesh = new THREE.Mesh(geometry, material);
-    textMesh.position.set(textData.position.x, textData.position.y, textData.position.z);
-    textMesh.rotation.set(textData.rotation.x, textData.rotation.y, textData.rotation.z);
-    scene.add(textMesh);
-    sceneObjects.push(textMesh);
-  } catch (error) {
-    console.error('Error loading text:', error);
-  }
 }
 
 function onWindowResize() {
@@ -109,10 +91,9 @@ function onWindowResize() {
 function animate() {
   requestAnimationFrame(animate);
   
-  // Rotate all objects in the scene
-  sceneObjects.forEach(obj => {
-    obj.rotation.y += 0.01;
-  });
+  // Rotate foot and text
+  if (foot) foot.rotation.y += 0.01;
+  if (text) text.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }
