@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
 export class Scene {
     constructor(canvas) {
@@ -9,17 +10,13 @@ export class Scene {
         this.renderer.setClearColor(0x000000) // Set background color to black
 
         this.setupLights()
-        this.setupCube()
-        this.setupGrid()
+        this.loadFootModel()
 
         // Update camera position and rotation
-        this.camera.position.set(0, 10, 10)
+        this.camera.position.set(0, 0, 5)
         this.camera.lookAt(0, 0, 0)
 
         window.addEventListener('resize', () => this.onWindowResize(), false)
-
-        // Load font and set up text asynchronously
-        this.loadFontAndSetupText()
     }
 
     setupLights() {
@@ -44,39 +41,30 @@ export class Scene {
         this.scene.add(rimLight2)
     }
 
-    setupCube() {
-        const geometry = new THREE.BoxGeometry()
-        const material = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            metalness: 0.8,
-            roughness: 0.2,
-        })
-        this.cube = new THREE.Mesh(geometry, material)
-        this.scene.add(this.cube)
-    }
-
-    setupText() {
-        const loader = new FontLoader()
-        loader.load('/fonts/cyberpunk.json', (font) => {
-            const textGeometry = new TextGeometry('Jake Hopkins', {
-                font: font,
-                size: 0.5,
-                height: 0.1,
-            })
-            const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
-            this.text = new THREE.Mesh(textGeometry, textMaterial)
-            this.text.position.set(-2, 0, -2)
-            this.scene.add(this.text)
-        })
-    }
-
-    setupGrid() {
-        const gridHelper = new THREE.GridHelper(10, 10, 0x00ff00, 0x00ff00)
-        this.scene.add(gridHelper)
+    loadFootModel() {
+        const loader = new OBJLoader()
+        loader.load(
+            'src/models/foot.obj',
+            (object) => {
+                this.foot = object
+                // Center the foot and scale it to fit the camera
+                this.foot.scale.setScalar(0.5)
+                this.foot.position.set(0, -1, 0)
+                this.scene.add(this.foot)
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+            },
+            (error) => {
+                console.log('An error happened', error)
+            }
+        )
     }
 
     update() {
-        this.cube.rotation.y += 0.01
+        if (this.foot) {
+            this.foot.rotation.y += 0.01
+        }
     }
 
     render() {
@@ -87,30 +75,5 @@ export class Scene {
         this.camera.aspect = window.innerWidth / window.innerHeight
         this.camera.updateProjectionMatrix()
         this.renderer.setSize(window.innerWidth, window.innerHeight)
-    }
-
-    async loadFontAndSetupText() {
-        try {
-            const FontLoaderModule = await import('three/examples/jsm/loaders/FontLoader.js')
-            const TextGeometryModule = await import('three/examples/jsm/geometries/TextGeometry.js')
-            
-            const FontLoader = FontLoaderModule.FontLoader
-            const TextGeometry = TextGeometryModule.TextGeometry
-
-            const loader = new FontLoader()
-            loader.load('/fonts/cyberpunk.json', (font) => {
-                const textGeometry = new TextGeometry('Jake Hopkins', {
-                    font: font,
-                    size: 0.5,
-                    height: 0.1,
-                })
-                const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
-                this.text = new THREE.Mesh(textGeometry, textMaterial)
-                this.text.position.set(-2, 0, -2)
-                this.scene.add(this.text)
-            })
-        } catch (error) {
-            console.error('Error loading font:', error)
-        }
     }
 }
